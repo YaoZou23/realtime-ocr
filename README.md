@@ -262,3 +262,4 @@ If you encounter any issues:
 
 # ocr-realtime
 # ocr-realtime
+# realtime-ocr
