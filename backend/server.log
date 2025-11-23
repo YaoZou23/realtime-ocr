@@ -1,0 +1,476 @@
+INFO:__main__:Configured tesseract path: /opt/miniconda3/envs/ocr-translate/bin/tesseract
+INFO:__main__:Starting Flask server on 0.0.0.0:5001 (accessible from network)
+ * Serving Flask app 'app'
+ * Debug mode: off
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.195.85.188:5001
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:__main__:Request: POST /api/ocr
+INFO:__main__:Remote address: 127.0.0.1
+INFO:__main__:Received OCR request
+INFO:__main__:Image data length: 88468
+INFO:__main__:Decoding base64 image...
+INFO:__main__:Image opened: (1342, 686), mode: RGBA
+INFO:__main__:Trying EasyOCR...
+INFO:__main__:Initializing EasyOCR reader (first time, may take a moment)...
+WARNING:easyocr.easyocr:Using CPU. Note: This module is much faster with a GPU.
+INFO:__main__:EasyOCR reader initialized successfully
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1342x686
+WARNING:__main__:EasyOCR failed with adaptive: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with otsu: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with grayscale: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Trying Tesseract with advanced preprocessing...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1342x686
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+INFO:__main__:Best result from tesseract (adaptive_--oem 1 --psm 6_no_whitelist): 18 chars
+INFO:__main__:Text preview: > @
+OD &
+t sF
+
+“<<...
+INFO:werkzeug:127.0.0.1 - - [19/Nov/2025 18:26:44] "POST /api/ocr HTTP/1.1" 200 -
+INFO:__main__:Request: POST /api/ocr
+INFO:__main__:Remote address: 127.0.0.1
+INFO:__main__:Received OCR request
+INFO:__main__:Image data length: 74404
+INFO:__main__:Decoding base64 image...
+INFO:__main__:Image opened: (1276, 958), mode: RGB
+INFO:__main__:Trying EasyOCR...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1276x958
+WARNING:__main__:EasyOCR failed with otsu: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with grayscale: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Trying Tesseract with advanced preprocessing...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1276x958
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+INFO:__main__:Best result from tesseract (adaptive_--oem 1 --psm 6_no_whitelist): 676 chars
+INFO:__main__:Text preview: : . . man fo o! : : .
+. a Se . . re a is :
+. : ar ne er ans eli st
+7 - bo et - re .
+: a fg we ely
+: ...
+INFO:werkzeug:127.0.0.1 - - [19/Nov/2025 18:27:24] "POST /api/ocr HTTP/1.1" 200 -
+INFO:__main__:Request: POST /api/ocr
+INFO:__main__:Remote address: 127.0.0.1
+INFO:__main__:Received OCR request
+INFO:__main__:Image data length: 117060
+INFO:__main__:Decoding base64 image...
+INFO:__main__:Image opened: (1702, 1276), mode: RGB
+INFO:__main__:Trying EasyOCR...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1702x1276
+WARNING:__main__:EasyOCR failed with otsu: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with grayscale: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Trying Tesseract with advanced preprocessing...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1702x1276
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+INFO:__main__:Best result from tesseract (adaptive_--oem 1 --psm 6_no_whitelist): 1856 chars
+INFO:__main__:Text preview: - a aa * - Loe : “ Aa -
+. “e . aa ‘. . . al » .
+~ ae Boe eo roe : . °
+Ld © . is . st . . . ee . oo
+....
+INFO:werkzeug:127.0.0.1 - - [19/Nov/2025 18:28:30] "POST /api/ocr HTTP/1.1" 200 -
+INFO:__main__:Request: GET /api/test
+INFO:__main__:Remote address: 10.195.101.155
+INFO:__main__:Test endpoint called from 10.195.101.155
+INFO:werkzeug:10.195.101.155 - - [19/Nov/2025 18:45:41] "GET /api/test HTTP/1.1" 200 -
+INFO:__main__:Request: GET /api/test
+INFO:__main__:Remote address: 10.195.101.155
+INFO:__main__:Test endpoint called from 10.195.101.155
+INFO:werkzeug:10.195.101.155 - - [19/Nov/2025 18:45:42] "GET /api/test HTTP/1.1" 200 -
+INFO:__main__:Request: GET /api/test
+INFO:__main__:Remote address: 10.195.101.155
+INFO:__main__:Test endpoint called from 10.195.101.155
+INFO:werkzeug:10.195.101.155 - - [19/Nov/2025 18:45:42] "GET /api/test HTTP/1.1" 200 -
+INFO:__main__:Request: POST /api/ocr
+INFO:__main__:Remote address: 10.195.101.155
+INFO:__main__:Received OCR request
+INFO:__main__:Image data length: 257036
+INFO:__main__:Request: POST /api/ocr
+INFO:__main__:Decoding base64 image...
+INFO:__main__:Remote address: 10.195.101.155
+INFO:__main__:Received OCR request
+INFO:__main__:Image opened: (1716, 1080), mode: RGB
+INFO:__main__:Trying EasyOCR...
+INFO:__main__:Image data length: 215796
+INFO:__main__:Decoding base64 image...
+INFO:__main__:Image opened: (1716, 1080), mode: RGB
+INFO:__main__:Trying EasyOCR...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1716x1080
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1716x1080
+WARNING:__main__:EasyOCR failed with adaptive: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with adaptive: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with otsu: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with otsu: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with grayscale: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Trying Tesseract with advanced preprocessing...
+WARNING:__main__:EasyOCR failed with grayscale: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Trying Tesseract with advanced preprocessing...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1716x1080
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1716x1080
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+INFO:__main__:Best result from tesseract (otsu_--oem 1 --psm 6_no_whitelist): 84 chars
+INFO:__main__:Text preview: Jae
+oe
+¥
+$
+joe;
+4 4 Ry is. eo
+: 7 coe
+s G . . ate }-
+2 ie co.
+re Sat
+: Sree
+a re
+eee...
+INFO:werkzeug:10.195.101.155 - - [19/Nov/2025 18:46:55] "POST /api/ocr HTTP/1.1" 200 -
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+INFO:__main__:Best result from tesseract (otsu_--oem 1 --psm 6_no_whitelist): 236 chars
+INFO:__main__:Text preview: si‘ (a’rl.ryye™ ° ' .
+—— - te, “TJ
+ee a te oc
+$$ 5 >. .
+“s te “ ~« i
+““ : , a
+- Se le] e, _
+vw : a *...
+INFO:werkzeug:10.195.101.155 - - [19/Nov/2025 18:46:57] "POST /api/ocr HTTP/1.1" 200 -
+INFO:__main__:Request: POST /api/ocr
+INFO:__main__:Remote address: 10.195.101.155
+INFO:__main__:Received OCR request
+INFO:__main__:Image data length: 270320
+INFO:__main__:Decoding base64 image...
+INFO:__main__:Image opened: (1716, 1080), mode: RGB
+INFO:__main__:Trying EasyOCR...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1716x1080
+WARNING:__main__:EasyOCR failed with adaptive: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with grayscale: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Trying Tesseract with advanced preprocessing...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1716x1080
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+INFO:__main__:Best result from tesseract (adaptive_--oem 1 --psm 6_no_whitelist): 509 chars
+INFO:__main__:Text preview: we beatae
+ee + wg hoe * ‘ :
+a Cle gets Te Ry pL z . .
+. : : Pediat ST a -
+’ we Lee ST, Agta Fad Oh U...
+INFO:werkzeug:10.195.101.155 - - [19/Nov/2025 18:49:17] "POST /api/ocr HTTP/1.1" 200 -
+INFO:__main__:Request: GET /api/test
+INFO:__main__:Remote address: 127.0.0.1
+INFO:__main__:Test endpoint called from 127.0.0.1
+INFO:werkzeug:127.0.0.1 - - [19/Nov/2025 18:49:47] "GET /api/test HTTP/1.1" 200 -
+INFO:__main__:Request: GET /api/test
+INFO:__main__:Remote address: 127.0.0.1
+INFO:__main__:Test endpoint called from 127.0.0.1
+INFO:werkzeug:127.0.0.1 - - [19/Nov/2025 18:50:12] "GET /api/test HTTP/1.1" 200 -
+INFO:__main__:Request: GET /api/test
+INFO:__main__:Remote address: 10.195.85.188
+INFO:__main__:Test endpoint called from 10.195.85.188
+INFO:werkzeug:10.195.85.188 - - [19/Nov/2025 18:50:12] "GET /api/test HTTP/1.1" 200 -
+INFO:__main__:Request: POST /api/ocr
+INFO:__main__:Remote address: 127.0.0.1
+INFO:__main__:Received OCR request
+INFO:__main__:Image data length: 6748
+INFO:__main__:Decoding base64 image...
+INFO:__main__:Image opened: (400, 200), mode: RGB
+INFO:__main__:Trying EasyOCR...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 400x200
+WARNING:__main__:EasyOCR failed with adaptive: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with otsu: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with grayscale: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Trying Tesseract with advanced preprocessing...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 400x200
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+INFO:__main__:Best result from tesseract (adaptive_--oem 1 --psm 3_no_whitelist): 20 chars
+INFO:__main__:Text preview: | World
+lection Test...
+INFO:werkzeug:127.0.0.1 - - [19/Nov/2025 18:50:18] "POST /api/ocr HTTP/1.1" 200 -
+INFO:__main__:Request: POST /api/ocr
+INFO:__main__:Remote address: 10.195.85.188
+INFO:__main__:Received OCR request
+INFO:__main__:Image data length: 6748
+INFO:__main__:Decoding base64 image...
+INFO:__main__:Image opened: (400, 200), mode: RGB
+INFO:__main__:Trying EasyOCR...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 400x200
+WARNING:__main__:EasyOCR failed with adaptive: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with otsu: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with grayscale: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Trying Tesseract with advanced preprocessing...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 400x200
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+INFO:__main__:Best result from tesseract (adaptive_--oem 1 --psm 3_no_whitelist): 20 chars
+INFO:__main__:Text preview: | World
+lection Test...
+INFO:werkzeug:10.195.85.188 - - [19/Nov/2025 18:50:23] "POST /api/ocr HTTP/1.1" 200 -
+INFO:__main__:Request: POST /api/ocr
+INFO:__main__:Remote address: 10.195.101.155
+INFO:__main__:Received OCR request
+INFO:__main__:Image data length: 243536
+INFO:__main__:Decoding base64 image...
+INFO:__main__:Image opened: (1716, 1080), mode: RGB
+INFO:__main__:Trying EasyOCR...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1716x1080
+WARNING:__main__:EasyOCR failed with adaptive: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Request: POST /api/ocr
+INFO:__main__:Remote address: 10.195.85.188
+INFO:__main__:Received OCR request
+INFO:__main__:Image data length: 19292
+INFO:__main__:Decoding base64 image...
+INFO:__main__:Image opened: (800, 600), mode: RGB
+INFO:__main__:Trying EasyOCR...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 800x600
+WARNING:__main__:EasyOCR failed with adaptive: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with otsu: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with otsu: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with grayscale: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Trying Tesseract with advanced preprocessing...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 800x600
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+INFO:__main__:Best result from tesseract (grayscale_--oem 1 --psm 11_no_whitelist): 26 chars
+INFO:__main__:Text preview: oo
+
+ony
+
+=0
+
+pale}
+
+os
+
+a=...
+INFO:werkzeug:10.195.85.188 - - [19/Nov/2025 18:51:14] "POST /api/ocr HTTP/1.1" 200 -
+WARNING:__main__:EasyOCR failed with grayscale: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Trying Tesseract with advanced preprocessing...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1716x1080
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+INFO:__main__:Best result from tesseract (otsu_--oem 1 --psm 6_no_whitelist): 138 chars
+INFO:__main__:Text preview: . J oe
+. a ° a
+-
+ea:
+eee vam
+a . “™ " ‘em
+n ‘ a, rz ."
+WS, Of oy oe re é By
+. a) my . . -, ‘we? ae a...
+INFO:werkzeug:10.195.101.155 - - [19/Nov/2025 18:51:28] "POST /api/ocr HTTP/1.1" 200 -
+INFO:__main__:Request: POST /api/ocr
+INFO:__main__:Remote address: 10.195.101.155
+INFO:__main__:Received OCR request
+INFO:__main__:Image data length: 260004
+INFO:__main__:Decoding base64 image...
+INFO:__main__:Image opened: (1716, 1080), mode: RGB
+INFO:__main__:Trying EasyOCR...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1716x1080
+WARNING:__main__:EasyOCR failed with adaptive: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Request: GET /api/test
+INFO:__main__:Remote address: 127.0.0.1
+INFO:__main__:Test endpoint called from 127.0.0.1
+INFO:werkzeug:127.0.0.1 - - [19/Nov/2025 18:52:23] "GET /api/test HTTP/1.1" 200 -
+INFO:__main__:Request: GET /api/test
+INFO:__main__:Remote address: 10.195.85.188
+INFO:__main__:Test endpoint called from 10.195.85.188
+INFO:werkzeug:10.195.85.188 - - [19/Nov/2025 18:52:23] "GET /api/test HTTP/1.1" 200 -
+INFO:__main__:Request: POST /api/ocr
+INFO:__main__:Remote address: 127.0.0.1
+INFO:__main__:Received OCR request
+INFO:__main__:Image data length: 6748
+INFO:__main__:Decoding base64 image...
+INFO:__main__:Image opened: (400, 200), mode: RGB
+INFO:__main__:Trying EasyOCR...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 400x200
+WARNING:__main__:EasyOCR failed with adaptive: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with otsu: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with otsu: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with grayscale: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Trying Tesseract with advanced preprocessing...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 400x200
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+INFO:__main__:Best result from tesseract (adaptive_--oem 1 --psm 3_no_whitelist): 20 chars
+INFO:__main__:Text preview: | World
+lection Test...
+INFO:werkzeug:127.0.0.1 - - [19/Nov/2025 18:52:36] "POST /api/ocr HTTP/1.1" 200 -
+INFO:__main__:Request: POST /api/ocr
+INFO:__main__:Remote address: 10.195.85.188
+INFO:__main__:Received OCR request
+INFO:__main__:Image data length: 6748
+INFO:__main__:Decoding base64 image...
+INFO:__main__:Image opened: (400, 200), mode: RGB
+INFO:__main__:Trying EasyOCR...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 400x200
+WARNING:__main__:EasyOCR failed with adaptive: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with otsu: module 'PIL.Image' has no attribute 'ANTIALIAS'
+WARNING:__main__:EasyOCR failed with grayscale: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Trying Tesseract with advanced preprocessing...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 400x200
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+OMP: Warning #191: Forking a process while a parallel region is active is potentially unsafe.
+WARNING:__main__:EasyOCR failed with grayscale: module 'PIL.Image' has no attribute 'ANTIALIAS'
+INFO:__main__:Trying Tesseract with advanced preprocessing...
+INFO:__main__:Deskewed image by -90.00 degrees
+INFO:__main__:Cropped to text region: 1716x1080
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with adaptive --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+INFO:__main__:Best result from tesseract (adaptive_--oem 1 --psm 3_no_whitelist): 20 chars
+INFO:__main__:Text preview: | World
+lection Test...
+INFO:werkzeug:10.195.85.188 - - [19/Nov/2025 18:52:46] "POST /api/ocr HTTP/1.1" 200 -
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with otsu --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 6: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+WARNING:__main__:Tesseract OCR failed with grayscale --oem 2 --psm 11: (1, "read_params_file: Can't open .,!?;:-()[]{} Error: Tesseract (legacy) engine requested, but components are not present in /opt/miniconda3/envs/ocr-translate/share/tessdata/eng.traineddata!! Failed loading language 'eng' Tesseract couldn't load any languages! Could not initialize tesseract.")
+INFO:__main__:Best result from tesseract (adaptive_--oem 1 --psm 6_no_whitelist): 291 chars
+INFO:__main__:Text preview: oa ‘ met ee ets pes
+2 . . . 1 » tog etg Stee Oe sre
+. : . Ts Ps a eee ee ee ta
+> Tre ee
+_* “ na a we...
+INFO:werkzeug:10.195.101.155 - - [19/Nov/2025 18:52:53] "POST /api/ocr HTTP/1.1" 200 -
