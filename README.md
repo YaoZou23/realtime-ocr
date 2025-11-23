@@ -261,3 +261,4 @@ If you encounter any issues:
 **Happy OCR-ing! 📸✨**
 
 # ocr-realtime
+# ocr-realtime
