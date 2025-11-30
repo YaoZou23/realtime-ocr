@@ -1,35 +1,20 @@
 # 📄 Flask OCR Backend
 
-A simple Flask server that performs OCR (Optical Character Recognition) on images sent from a mobile app.
+A Flask server that performs OCR (Optical Character Recognition) and image translation with text overlay using EasyOCR.
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
 1. **Python 3.8+** installed
-2. **Tesseract OCR** installed on your system
-
-### Install Tesseract OCR
-
-**macOS:**
-```bash
-brew install tesseract
-```
-
-**Linux (Ubuntu/Debian):**
-```bash
-sudo apt-get update
-sudo apt-get install tesseract-ocr
-```
-
-**Windows:**
-Download from: https://github.com/UB-Mannheim/tesseract/wiki
+2. **EasyOCR** (automatically installed via requirements.txt)
+3. **OpenCV** and image processing libraries
 
 ### Setup Instructions
 
 1. **Navigate to the backend directory:**
 ```bash
-cd "/Users/yao_zou1223/Desktop/PTOT project/realtime-ocr/backend"
+cd backend
 ```
 
 2. **Create a virtual environment (recommended):**
@@ -45,112 +30,176 @@ venv\Scripts\activate  # On Windows
 pip install -r requirements.txt
 ```
 
-4. **Verify Tesseract installation:**
+⚠️ **IMPORTANT:** Make sure all requirements are installed before running the server!
+
+4. **Find your computer's IP address:**
 ```bash
-tesseract --version
+# macOS/Linux
+ipconfig getifaddr en0  # Usually en0 for Wi-Fi, en1 for Ethernet
+# or
+ifconfig | grep "inet " | grep -v 127.0.0.1
+
+# Windows
+ipconfig
+# Look for IPv4 Address under your active network adapter
 ```
+
+5. **Update the frontend with your IP address:**
+   - Open `mobile-app/app/(tabs)/index.tsx`
+   - Update `YOUR_SERVER_IP` and `TEST_SERVER_IP` with your IP address
+   - Open `mobile-app/app/(tabs)/upload.tsx`
+   - Update `SERVER_IP` with your IP address
+   - **Make sure the port matches:** The backend runs on port **5003** by default
 
 ### Running the Server
 
-**Start the Flask server:**
+**Option 1: Using the start script (recommended):**
+```bash
+chmod +x start.sh
+./start.sh
+```
+
+**Option 2: Manual start:**
 ```bash
 python app.py
 ```
 
 You should see:
 ```
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://10.195.85.188:5000
+Starting Flask server on 0.0.0.0:5003 (accessible from network)
 ```
 
-⚠️ **Note:** The server runs on `0.0.0.0:5000` to accept connections from your mobile device.
+⚠️ **IMPORTANT:** 
+- The server runs on port **5003** by default
+- Make sure the frontend uses the **same port** (5003)
+- The server is accessible from your local network at `http://YOUR_IP:5003`
 
-## 📱 Mobile App Configuration
+## 📱 Frontend Configuration
 
-Make sure your mobile app's IP address matches your Mac's IP:
+**Update this file in `mobile-app/app/(tabs)/`:**
 
-**In your mobile app (`index.tsx`):**
+**upload.tsx** (Upload/Translation tab):
 ```typescript
-const YOUR_SERVER_IP = "http://10.195.85.188:5000/api/ocr";
+// ⚠️ REPLACE WITH YOUR MAC'S IP ADDRESS
+const SERVER_IP = "http://YOUR_IP:5003/api/ocr";
 ```
 
-### Find Your Mac's IP Address:
-```bash
-ipconfig getifaddr en0  # Usually en0 for Wi-Fi, en1 for Ethernet
-```
+Replace `YOUR_IP` with your actual IP address (e.g., `10.195.91.229`)
 
-## 🔧 API Endpoint
+**Note:** The `index.tsx` file is now a blank home tab and doesn't require IP configuration.
+
+## 🔧 API Endpoints
+
+### `GET /api/test`
+Test endpoint to verify connectivity.
+
+**Response:**
+```json
+{
+  "status": "ok",
+  "message": "Connection successful",
+  "ip": "client_ip",
+  "server_ip": "10.195.91.229",
+  "port": 5003,
+  "easyocr_ready": true
+}
+```
 
 ### `POST /api/ocr`
+Perform OCR and optionally translate text with overlay.
 
 **Request Body:**
 ```json
 {
-  "image": "base64_encoded_image_string"
+  "image": "base64_encoded_image_string",
+  "target_lang": "ZH",  // Optional: Language code for translation (e.g., "ZH" for Chinese)
+  "return_overlay": true,  // Optional: Return annotated image with translated text overlay
+  "include_segment_data": false  // Optional: Include segment coordinates
 }
 ```
 
 **Response:**
 ```json
 {
-  "text": "Extracted text from the image"
+  "text": "Extracted text from the image",
+  "translated_text": "Translated text (if target_lang provided)",
+  "annotated_image": "data:image/png;base64,...",  // If return_overlay is true
+  "confidence": 0.95
 }
 ```
 
 **Example using curl:**
 ```bash
-curl -X POST http://localhost:5000/api/ocr \
+curl -X POST http://localhost:5003/api/ocr \
   -H "Content-Type: application/json" \
-  -d '{"image": "iVBORw0KGgoAAAANS..."}'
+  -d '{"image": "base64_string_here", "target_lang": "ZH", "return_overlay": true}'
+```
+
+### `POST /api/translate`
+Translate text (standalone endpoint).
+
+**Request Body:**
+```json
+{
+  "text": "Text to translate",
+  "target_lang": "ZH"
+}
 ```
 
 ## 🐛 Troubleshooting
 
-### Issue: "pytesseract.pytesseract.TesseractNotFoundError"
+### Issue: "Module not found" or import errors
 
 **Solution:**
 ```bash
-# macOS
-brew install tesseract
+# Make sure you're in the virtual environment
+source venv/bin/activate  # macOS/Linux
+venv\Scripts\activate  # Windows
 
-# If still not found, specify the path in app.py:
-# pytesseract.pytesseract.tesseract_cmd = '/opt/homebrew/bin/tesseract'
+# Reinstall requirements
+pip install -r requirements.txt
 ```
 
 ### Issue: Mobile app can't connect to server
 
 **Checklist:**
-1. ✅ Backend server is running (`python app.py`)
+1. ✅ Backend server is running (`python app.py` or `./start.sh`)
 2. ✅ Both devices are on the **same Wi-Fi network**
-3. ✅ IP address in mobile app matches your Mac's IP
-4. ✅ Firewall isn't blocking port 5000
-5. ✅ Using `http://` not `https://`
+3. ✅ IP address in mobile app matches your computer's IP
+4. ✅ **Port matches:** Frontend uses port 5003 (same as backend)
+5. ✅ Firewall isn't blocking port 5003
+6. ✅ Using `http://` not `https://`
 
 **Test connection:**
 ```bash
-# From another terminal on your Mac
-curl http://localhost:5000/api/ocr -X POST \
-  -H "Content-Type: application/json" \
-  -d '{"image": ""}'
+# From your computer
+curl http://localhost:5003/api/test
+
+# From another device on the same network
+curl http://YOUR_IP:5003/api/test
 ```
 
 ### Issue: "Connection timeout"
 
 **Solution:**
 - Check if firewall is blocking connections
-- Try disabling firewall temporarily:
-  ```bash
-  # macOS
-  sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate off
-  ```
+- Verify both devices are on the same network
+- Try pinging your computer's IP from the mobile device
+- Check if the backend is actually running and listening on 0.0.0.0:5003
+
+### Issue: EasyOCR initialization is slow
+
+**Note:** The first OCR request may take 15-30 seconds as EasyOCR loads models. Subsequent requests will be faster.
 
 ## 📦 Dependencies
 
+See `requirements.txt` for full list. Key dependencies:
 - **Flask**: Web framework
 - **flask-cors**: Enable CORS for mobile app requests
-- **pytesseract**: Python wrapper for Tesseract OCR
+- **EasyOCR**: OCR engine with multi-language support
 - **Pillow**: Image processing library
+- **OpenCV**: Image preprocessing and enhancement
+- **numpy**: Numerical operations
 
 ## 🔐 Security Note
 
@@ -160,8 +209,40 @@ curl http://localhost:5000/api/ocr -X POST \
 - Implement rate limiting
 - Add input validation
 - Use HTTPS
+- Deploy to a cloud service
 
-## 📝 License
+## 📝 GitHub Upload
 
-MIT License - feel free to use for your project!
+Before uploading to GitHub:
 
+1. **Create a `.gitignore` file** (if not exists) with:
+```
+venv/
+__pycache__/
+*.pyc
+*.log
+.env
+annotated_results/
+dataimages/
+```
+
+2. **Commit and push:**
+```bash
+git add .
+git commit -m "Add OCR backend with translation support"
+git push origin main
+```
+
+## 🚀 Next Steps
+
+1. ✅ Install all requirements: `pip install -r requirements.txt`
+2. ✅ Find your IP address: `ipconfig getifaddr en0`
+3. ✅ Update frontend IP addresses in `mobile-app/app/(tabs)/index.tsx` and `upload.tsx`
+4. ✅ Ensure frontend uses port **5003** (same as backend)
+5. ✅ Start the server: `./start.sh` or `python app.py`
+6. ✅ Test connection from mobile app
+7. ✅ Upload to GitHub when ready
+
+---
+
+**Happy coding! 🎉**

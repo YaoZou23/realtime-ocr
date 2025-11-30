@@ -1,50 +1,283 @@
-# Welcome to your Expo app 👋
+# 📱 Real-Time OCR Mobile App (Expo/React Native)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A mobile application for real-time OCR (Optical Character Recognition) and image translation with text overlay, built with **React Native (Expo)**.
 
-## Get started
+## 🎯 Features
 
-1. Install dependencies
+- 📸 **Camera Integration**: Capture photos using your phone's camera
+- 📤 **Image Upload**: Upload images from gallery for OCR processing
+- 🔍 **OCR Processing**: Extract text from images using backend OCR service
+- 🌐 **Translation**: Translate detected text with visual overlay on images
+- ✨ **Beautiful UI**: Modern interface with loading states and error handling
+- 🚀 **Fast**: Base64 encoding for quick image transfer
 
-   ```bash
-   npm install
-   ```
+## 📁 Project Structure
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+mobile-app/
+├── app/
+│   ├── (tabs)/
+│   │   ├── index.tsx      # Home tab (blank)
+│   │   ├── upload.tsx     # Upload & Translation tab
+│   │   └── explore.tsx    # Profile tab
+│   ├── _layout.tsx        # Root layout
+│   └── modal.tsx          # Modal screen
+├── components/            # Reusable components
+├── constants/            # App constants
+├── hooks/                # Custom hooks
+├── package.json          # Dependencies
+└── tsconfig.json         # TypeScript config
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🚀 Quick Start Guide
 
-## Learn more
+### Prerequisites
 
-To learn more about developing your project with Expo, look at the following resources:
+1. **Node.js** 18+ installed
+2. **npm** or **yarn** package manager
+3. **Expo CLI** (optional, but recommended)
+4. **Expo Go** app on your mobile device (for testing)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Setup Instructions
 
-## Join the community
+1. **Navigate to the mobile-app directory:**
+```bash
+cd mobile-app
+```
 
-Join our community of developers creating universal apps.
+2. **Install dependencies:**
+```bash
+npm install
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+⚠️ **IMPORTANT:** Make sure all dependencies are installed before running the app!
+
+3. **Find your backend server's IP address:**
+   - Make sure your backend server is running
+   - On macOS/Linux: `ipconfig getifaddr en0`
+   - On Windows: `ipconfig` (look for IPv4 Address)
+
+4. **Update IP address in the app:**
+   
+   **File: `app/(tabs)/upload.tsx`** (Upload & Translation tab):
+   ```typescript
+   // ⚠️ REPLACE WITH YOUR MAC'S IP ADDRESS
+   const SERVER_IP = "http://YOUR_IP:5003/api/ocr";
+   ```
+   
+   Replace `YOUR_IP` with your backend server's IP address (e.g., `10.195.91.229`)
+   
+   ⚠️ **IMPORTANT:** 
+   - Use the **same port** as your backend (default: **5003**)
+   - Make sure both devices are on the **same Wi-Fi network**
+   - **Note:** The `index.tsx` file is a blank home tab and doesn't require IP configuration
+
+5. **Start the Expo development server:**
+```bash
+npx expo start
+```
+
+6. **Run on your device:**
+   - Scan the QR code with **Expo Go** app (iOS/Android)
+   - Or press `i` for iOS simulator / `a` for Android emulator
+
+## 🔧 Configuration
+
+### Backend Connection
+
+The app connects to a Flask backend server. Make sure:
+
+1. ✅ Backend server is running on port **5003**
+2. ✅ Frontend uses the **same port** (5003)
+3. ✅ Both devices (computer and phone) are on the **same Wi-Fi network**
+4. ✅ IP address is correctly set in `upload.tsx`
+
+### Port Configuration
+
+**Default port:** 5003
+
+If you change the backend port, update it in:
+- `app/(tabs)/index.tsx`
+- `app/(tabs)/upload.tsx`
+
+**Example:**
+```typescript
+// If backend runs on port 5000, update to:
+const SERVER_IP = "http://YOUR_IP:5000/api/ocr";
+```
+
+## 📱 App Tabs
+
+### Home Tab (`index.tsx`)
+- Blank welcome screen
+- Ready for customization
+
+### Upload Tab (`upload.tsx`)
+- Upload images from gallery
+- Translate text with visual overlay
+- View translated images with overlay text
+
+### Profile Tab (`explore.tsx`)
+- User profile screen
+
+## 🛠️ Technology Stack
+
+- **React Native** 0.81.5
+- **Expo** ~54.0.25
+- **Expo Router** ~6.0.15 - File-based routing
+- **Expo Camera** ~17.0.9 - Camera integration
+- **Expo Image Picker** - Image gallery access
+- **Axios** ^1.13.2 - HTTP requests
+- **TypeScript** ~5.9.2 - Type safety
+
+## 🐛 Troubleshooting
+
+### Cannot connect to backend server
+
+**Checklist:**
+1. ✅ Backend server is running (`python app.py` in backend directory)
+2. ✅ Both devices are on the **same Wi-Fi network**
+3. ✅ IP address is correct in `upload.tsx`
+4. ✅ **Port matches:** Frontend uses same port as backend (5003)
+5. ✅ Firewall isn't blocking port 5003
+6. ✅ Using `http://` not `https://`
+
+**Test connection:**
+```bash
+# From your computer
+curl http://YOUR_IP:5003/api/test
+```
+
+### Module not found errors
+
+**Solution:**
+```bash
+cd mobile-app
+rm -rf node_modules package-lock.json
+npm install
+```
+
+### Camera permission denied
+
+- Delete app and reinstall
+- Check phone settings → Expo Go → Camera
+- Grant permissions when prompted
+
+### Image picker not working
+
+- Grant media library permissions when prompted
+- Check phone settings → Expo Go → Photos
+
+### Expo Go connection issues
+
+- Make sure phone and computer are on the same Wi-Fi network
+- Try restarting Expo development server
+- Clear Expo Go cache and restart
+
+## 📦 Dependencies Installation
+
+If you encounter dependency issues:
+
+```bash
+# Clean install
+rm -rf node_modules package-lock.json
+npm install
+
+# Or use yarn
+yarn install
+```
+
+## 🔒 Security Notes
+
+⚠️ **Development Mode Only**
+
+For production deployment:
+- [ ] Use HTTPS instead of HTTP
+- [ ] Add API authentication (JWT tokens)
+- [ ] Implement error handling and validation
+- [ ] Use environment variables for API endpoints
+- [ ] Add app signing and security measures
+
+## 📝 GitHub Upload
+
+Before uploading to GitHub:
+
+1. **Create/update `.gitignore`** with:
+```
+node_modules/
+.expo/
+.expo-shared/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+.DS_Store
+```
+
+2. **Commit and push:**
+```bash
+git add .
+git commit -m "Add mobile OCR app with upload and translation features"
+git push origin main
+```
+
+## 🚀 Next Steps
+
+1. ✅ Install dependencies: `npm install`
+2. ✅ Find backend IP address: `ipconfig getifaddr en0`
+3. ✅ Update IP addresses in `app/(tabs)/index.tsx` and `upload.tsx`
+4. ✅ Ensure port matches backend (default: **5003**)
+5. ✅ Start Expo: `npx expo start`
+6. ✅ Test on device with Expo Go
+7. ✅ Upload to GitHub when ready
+
+## 📸 How It Works
+
+```
+┌─────────────┐
+│  Mobile App │
+│   (Expo)    │
+└──────┬──────┘
+       │ 1. Capture/Upload Image
+       ▼
+┌─────────────┐
+│   Base64    │
+│  Encoding   │
+└──────┬──────┘
+       │ 2. Send to Backend
+       ▼
+┌─────────────┐
+│ Flask API   │
+│ /api/ocr    │
+└──────┬──────┘
+       │ 3. OCR + Translation
+       ▼
+┌─────────────┐
+│  Result +   │
+│  Overlay    │
+└──────┬──────┘
+       │ 4. Display
+       ▼
+┌─────────────┐
+│  Mobile App │
+│   (Result)  │
+└─────────────┘
+```
+
+## 🎨 UI Features
+
+- 📸 **Camera View**: Full-screen live camera (if implemented)
+- 📤 **Upload Area**: Dashed border upload zone with icon
+- ⏳ **Loading States**: Spinners during processing
+- 📄 **Results Display**: Image with translated text overlay
+- ❌ **Error Handling**: Clear error messages
+- 🔄 **Reset Options**: Upload another image
+
+---
+
+**Happy coding! 🎉**

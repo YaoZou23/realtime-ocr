@@ -1,0 +1,37 @@
+# Backend
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/*.log
+backend/.env
+backend/annotated_results/
+backend/dataimages/
+backend/server.log
+
+# Frontend
+mobile-app/node_modules/
+mobile-app/.expo/
+mobile-app/.expo-shared/
+mobile-app/dist/
+mobile-app/*.log
+
+# Test data (large image files)
+testdata/*.png
+testdata/*.jpg
+testdata/*.jpeg
+testdata/.DS_Store
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+
