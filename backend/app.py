@@ -41,7 +41,8 @@ CONFIG_PRIORITY = {
     "resized_easyocr": 2,
 }
 DEFAULT_CONFIG_PRIORITY = 1
-CONFIG_PRIORITY_WEIGHT = 5.0
+CONFIG_PRIORITY_WEIGHT = 4.0
+WORD_FREQUENCY_WEIGHT = 6.0  # boosts candidates whose words appear consistently across configs
 FONT_CANDIDATES = [
     "/System/Library/Fonts/PingFang.ttc",
     "/System/Library/Fonts/Supplemental/Arial Unicode.ttf",
@@ -590,43 +591,104 @@ def render_translated_overlay(img, line_segments, boxes_only=False):
             text_lines = wrap_text_to_width(translation, font, max_text_width)
             line_spacing = 2
         
-        # Sample background color from original image
+        # Improved background color detection - sample from edges and corners to avoid text
         img_rgb = img.convert("RGB")
-        sample_points = [
-            (x_min + box_width // 4, y_min + box_height // 4),
-            (x_min + 3 * box_width // 4, y_min + box_height // 4),
-            (x_min + box_width // 4, y_min + 3 * box_height // 4),
-            (x_min + 3 * box_width // 4, y_min + 3 * box_height // 4),
-            (x_min + box_width // 2, y_min + box_height // 2),  # center
-        ]
+        
+        # Expand sampling area slightly beyond the text box to get background
+        # Use a small margin to avoid pulling distant colors that do not represent the box area
+        expand_margin = max(4, min(box_width, box_height) // 6)
+        sample_area_x_min = max(0, x_min - expand_margin)
+        sample_area_x_max = min(img_rgb.width, x_max + expand_margin)
+        sample_area_y_min = max(0, y_min - expand_margin)
+        sample_area_y_max = min(img_rgb.height, y_max + expand_margin)
+        
+        # Sample from edges and corners (avoiding center where text likely is)
+        sample_points = []
+        
+        # Top edge (avoid center)
+        if sample_area_y_min < y_min:
+            for x in [sample_area_x_min, sample_area_x_min + (sample_area_x_max - sample_area_x_min) // 4,
+                     sample_area_x_min + 3 * (sample_area_x_max - sample_area_x_min) // 4, sample_area_x_max - 1]:
+                if 0 <= x < img_rgb.width and 0 <= sample_area_y_min < img_rgb.height:
+                    sample_points.append((x, sample_area_y_min))
+        
+        # Bottom edge
+        if sample_area_y_max > y_max:
+            for x in [sample_area_x_min, sample_area_x_min + (sample_area_x_max - sample_area_x_min) // 4,
+                     sample_area_x_min + 3 * (sample_area_x_max - sample_area_x_min) // 4, sample_area_x_max - 1]:
+                if 0 <= x < img_rgb.width and 0 <= sample_area_y_max - 1 < img_rgb.height:
+                    sample_points.append((x, sample_area_y_max - 1))
+        
+        # Left edge
+        if sample_area_x_min < x_min:
+            for y in [sample_area_y_min, sample_area_y_min + (sample_area_y_max - sample_area_y_min) // 4,
+                     sample_area_y_min + 3 * (sample_area_y_max - sample_area_y_min) // 4, sample_area_y_max - 1]:
+                if 0 <= sample_area_x_min < img_rgb.width and 0 <= y < img_rgb.height:
+                    sample_points.append((sample_area_x_min, y))
+        
+        # Right edge
+        if sample_area_x_max > x_max:
+            for y in [sample_area_y_min, sample_area_y_min + (sample_area_y_max - sample_area_y_min) // 4,
+                     sample_area_y_min + 3 * (sample_area_y_max - sample_area_y_min) // 4, sample_area_y_max - 1]:
+                if 0 <= sample_area_x_max - 1 < img_rgb.width and 0 <= y < img_rgb.height:
+                    sample_points.append((sample_area_x_max - 1, y))
+        
+        # If we don't have enough edge samples, add corner samples
+        if len(sample_points) < 4:
+            corners = [
+                (sample_area_x_min, sample_area_y_min),
+                (sample_area_x_max - 1, sample_area_y_min),
+                (sample_area_x_min, sample_area_y_max - 1),
+                (sample_area_x_max - 1, sample_area_y_max - 1),
+            ]
+            for px, py in corners:
+                if 0 <= px < img_rgb.width and 0 <= py < img_rgb.height:
+                    sample_points.append((px, py))
+        
         bg_colors = []
         for px, py in sample_points:
-            px = max(0, min(img_rgb.width - 1, px))
-            py = max(0, min(img_rgb.height - 1, py))
             try:
-                bg_colors.append(img_rgb.getpixel((px, py)))
+                pixel = img_rgb.getpixel((px, py))
+                bg_colors.append(pixel)
             except Exception:
                 continue
         
         if bg_colors:
-            # Average the sampled colors to determine brightness
-            avg_r = sum(c[0] for c in bg_colors) // len(bg_colors)
-            avg_g = sum(c[1] for c in bg_colors) // len(bg_colors)
-            avg_b = sum(c[2] for c in bg_colors) // len(bg_colors)
-            brightness = (avg_r + avg_g + avg_b) / 3
+            # Use median instead of average to avoid outliers (e.g., text pixels)
+            sorted_r = sorted([c[0] for c in bg_colors])
+            sorted_g = sorted([c[1] for c in bg_colors])
+            sorted_b = sorted([c[2] for c in bg_colors])
+            mid = len(sorted_r) // 2
+            median_r = sorted_r[mid] if len(sorted_r) > 0 else 128
+            median_g = sorted_g[mid] if len(sorted_g) > 0 else 128
+            median_b = sorted_b[mid] if len(sorted_b) > 0 else 128
             
-            # Use white/black backgrounds based on brightness
-            if brightness > 128:
-                # Light background: black text on white background
-                bg_color = (255, 255, 255, 220)
+            # Use relative luminance for better brightness calculation
+            # Formula: 0.299*R + 0.587*G + 0.114*B (perceptual brightness)
+            brightness = 0.299 * median_r + 0.587 * median_g + 0.114 * median_b
+            
+            # Use a more conservative threshold (140 instead of 128) to ensure good contrast
+            # Also check if the background is very colorful (high saturation) - use white/black for those
+            max_component = max(median_r, median_g, median_b)
+            min_component = min(median_r, median_g, median_b)
+            saturation = (max_component - min_component) / max(max_component, 1) if max_component > 0 else 0
+            
+            # For highly saturated colors or very light/dark backgrounds, use standard colors
+            if brightness > 140 or (brightness > 100 and saturation > 0.3):
+                # Light or colorful background: use semi-transparent white with black text
+                bg_color = (255, 255, 255, 240)  # More opaque for better readability
                 text_color = (0, 0, 0)
-            else:
-                # Dark background: white text on black background
-                bg_color = (0, 0, 0, 220)
+            elif brightness < 100:
+                # Dark background: use semi-transparent black with white text
+                bg_color = (0, 0, 0, 240)  # More opaque for better readability
                 text_color = (255, 255, 255)
+            else:
+                # Medium brightness: default to white background for safety
+                bg_color = (255, 255, 255, 240)
+                text_color = (0, 0, 0)
         else:
-            # Fallback: white background with black text
-            bg_color = (255, 255, 255, 220)
+            # Fallback: use high-contrast white background with black text
+            bg_color = (255, 255, 255, 240)
             text_color = (0, 0, 0)
         
         text_area = [
@@ -635,9 +697,26 @@ def render_translated_overlay(img, line_segments, boxes_only=False):
         ]
         draw.rectangle(text_area, fill=bg_color)
         
+        # Draw text with outline for better readability
         text_y = y_min + padding
         for line in text_lines:
             text_x = x_min + padding
+            
+            # Draw text outline/stroke for better contrast
+            # This ensures text is readable even if background color detection fails
+            outline_color = (255, 255, 255) if text_color == (0, 0, 0) else (0, 0, 0)
+            outline_width = 2  # Fixed width for consistent outline
+            
+            # Draw outline by drawing text with slight offsets in all directions
+            for dx in [-outline_width, 0, outline_width]:
+                for dy in [-outline_width, 0, outline_width]:
+                    if dx != 0 or dy != 0:
+                        try:
+                            draw.text((text_x + dx, text_y + dy), line, font=font, fill=outline_color)
+                        except Exception:
+                            pass
+            
+            # Draw main text on top
             draw.text((text_x, text_y), line, font=font, fill=text_color)
             text_y += measure_text(line, font)[1] + line_spacing
     
@@ -885,6 +964,8 @@ def apply_simple_post_corrections(text):
     
     corrections = [
         (re.compile(r'\bWHAT\s+IS\s+I\?', re.IGNORECASE), "what is it?"),
+        # Fix common EasyOCR confusion: "TAKE I" -> "TAKE IT"
+        (re.compile(r'\bTAKE\s+I\b', re.IGNORECASE), "take it"),
     ]
     
     def repl_factory(pattern, replacement):
@@ -955,6 +1036,30 @@ def invert_image(img):
     if isinstance(img, Image.Image):
         return Image.fromarray(inverted)
     return inverted
+
+
+def has_dark_background(img, threshold: float = 140.0) -> bool:
+    """
+    Heuristic: returns True if the image is overall dark (likely white/bright text on dark background).
+    Uses average luminance on a grayscale version of the image.
+    """
+    try:
+        if isinstance(img, Image.Image):
+            gray = img.convert("L")
+            arr = np.array(gray)
+        else:
+            # Assume OpenCV-style image
+            if len(img.shape) == 3:
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            else:
+                gray = img
+            arr = gray
+        mean_brightness = float(arr.mean())
+        logger.info(f"Estimated image brightness: {mean_brightness:.1f}")
+        return mean_brightness < threshold
+    except Exception as e:
+        logger.warning(f"Failed to estimate background brightness: {e}")
+        return False
 
 def ocr_with_easyocr(img):
     """Perform OCR using EasyOCR (支援原圖與反相圖)"""
@@ -1049,54 +1154,57 @@ def ocr_with_easyocr(img):
         except Exception as e:
             logger.warning(f"EasyOCR failed with original image: {e}")
         
-        # 反相圖 OCR
-        try:
-            img_invert = invert_image(img)
-            logger.info("Running EasyOCR on inverted image (timeout: 15s)...")
-            img_array = np.array(img_invert)
-            if len(img_array.shape) == 2:
-                img_array = cv2.cvtColor(img_array, cv2.COLOR_GRAY2RGB)
-            elif img_array.shape[2] == 4:
-                img_array = cv2.cvtColor(img_array, cv2.COLOR_RGBA2RGB)
-            detections = run_with_timeout(
-                lambda: reader.readtext(img_array),
-                timeout_seconds=15,
-                default_return=[]
-            )
-            if detections:
-                filtered = [det for det in detections if float(det[2]) >= MIN_CONFIDENCE]
-                segments = []
-                for det in filtered:
-                    segment_text = clean_ocr_text(det[1])
-                    if not segment_text:
-                        continue
-                    try:
-                        bbox_points = [[float(p[0]), float(p[1])] for p in det[0]]
-                    except Exception:
-                        bbox_points = []
-                    segments.append({
-                        "text": segment_text,
-                        "bbox": bbox_points,
-                        "confidence": float(det[2])
-                    })
-                text_parts = [det[1] for det in filtered]
-                text = ' '.join(text_parts).strip()
-                text = clean_ocr_text(text)
-                if text:
-                    avg_confidence = (
-                        sum(float(det[2]) for det in filtered) / max(1, len(filtered))
-                    )
-                    results.append({
-                        'text': text,
-                        'length': len(text),
-                        'config': 'inverted_easyocr',
-                        'engine': 'easyocr',
-                        'confidence': avg_confidence,
-                        'segments': segments,
-                        'coordinate_space': 'original'  # bounding boxes still align with original image
-                    })
-        except Exception as e:
-            logger.warning(f"EasyOCR failed with inverted image: {e}")
+        # 反相圖 OCR - only if background appears dark (likely white/bright text on dark background)
+        if has_dark_background(img):
+            try:
+                img_invert = invert_image(img)
+                logger.info("Running EasyOCR on inverted image (timeout: 15s)...")
+                img_array = np.array(img_invert)
+                if len(img_array.shape) == 2:
+                    img_array = cv2.cvtColor(img_array, cv2.COLOR_GRAY2RGB)
+                elif img_array.shape[2] == 4:
+                    img_array = cv2.cvtColor(img_array, cv2.COLOR_RGBA2RGB)
+                detections = run_with_timeout(
+                    lambda: reader.readtext(img_array),
+                    timeout_seconds=15,
+                    default_return=[]
+                )
+                if detections:
+                    filtered = [det for det in detections if float(det[2]) >= MIN_CONFIDENCE]
+                    segments = []
+                    for det in filtered:
+                        segment_text = clean_ocr_text(det[1])
+                        if not segment_text:
+                            continue
+                        try:
+                            bbox_points = [[float(p[0]), float(p[1])] for p in det[0]]
+                        except Exception:
+                            bbox_points = []
+                        segments.append({
+                            "text": segment_text,
+                            "bbox": bbox_points,
+                            "confidence": float(det[2])
+                        })
+                    text_parts = [det[1] for det in filtered]
+                    text = ' '.join(text_parts).strip()
+                    text = clean_ocr_text(text)
+                    if text:
+                        avg_confidence = (
+                            sum(float(det[2]) for det in filtered) / max(1, len(filtered))
+                        )
+                        results.append({
+                            'text': text,
+                            'length': len(text),
+                            'config': 'inverted_easyocr',
+                            'engine': 'easyocr',
+                            'confidence': avg_confidence,
+                            'segments': segments,
+                            'coordinate_space': 'original'  # bounding boxes still align with original image
+                        })
+            except Exception as e:
+                logger.warning(f"EasyOCR failed with inverted image: {e}")
+        else:
+            logger.info("Skipping inverted EasyOCR pass (background not dark enough for white text)")
         
         release_gpu_memory()  # 執行完釋放 GPU 記憶體
         return results
@@ -1122,6 +1230,19 @@ def ocr_with_preprocess_easyocr(img, apply_deskew=True, timeout_seconds=15):
                 proc_rgb = cv2.cvtColor(proc_img, cv2.COLOR_GRAY2RGB)
             else:
                 proc_rgb = proc_img
+
+            if name == "grayscale":
+                # Speed up grayscale pass by downscaling overly large frames before OCR
+                h, w = proc_rgb.shape[:2]
+                max_dim = max(h, w)
+                target_max = 1500
+                if max_dim > target_max:
+                    scale = target_max / max_dim
+                    new_size = (int(w * scale), int(h * scale))
+                    proc_rgb = cv2.resize(proc_rgb, new_size, interpolation=cv2.INTER_AREA)
+                    logger.info(
+                        f"Downscaled grayscale image for faster OCR: {w}x{h} -> {new_size[0]}x{new_size[1]}"
+                    )
 
             logger.info(f"Running EasyOCR on preprocessed {name} (timeout: {timeout_seconds}s)...")
             detections = run_with_timeout(
@@ -1254,11 +1375,23 @@ def test():
     except Exception as e:
         logger.warning(f"Could not pre-initialize EasyOCR: {e}")
     
+    # Get server IP address dynamically
+    import socket
+    try:
+        # Get the IP address of the network interface
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        server_ip = s.getsockname()[0]
+        s.close()
+    except Exception:
+        # Fallback to localhost if can't determine IP
+        server_ip = "127.0.0.1"
+    
     return jsonify({
         "status": "ok", 
         "message": "Connection successful", 
         "ip": request.remote_addr,
-        "server_ip": "10.195.90.18",
+        "server_ip": server_ip,
         "port": 5003,
         "easyocr_ready": easyocr_reader is not None
     }), 200
@@ -1286,15 +1419,28 @@ def api_translate():
 def ocr():
     # Handle CORS preflight requests
     if request.method == "OPTIONS":
+        logger.info("CORS preflight request received")
         return jsonify({"status": "ok"}), 200
     
     try:
-        logger.info("Received OCR request")
+        logger.info(f"Received OCR request from {request.remote_addr}")
+        logger.info(f"Request headers: {dict(request.headers)}")
+        logger.info(f"Content-Type: {request.content_type}")
+        logger.info(f"Content-Length: {request.content_length}")
+        
         # Get the base64 image from request
         data = request.get_json()
-        if not data or "image" not in data:
-            logger.warning("No image provided in request")
+        if not data:
+            logger.warning("No JSON data in request body")
+            return jsonify({"error": "No JSON data provided"}), 400
+        if "image" not in data:
+            logger.warning("No image field in request data")
+            logger.info(f"Request data keys: {list(data.keys()) if data else 'None'}")
             return jsonify({"error": "No image provided"}), 400
+        
+        logger.info(f"Image data length: {len(data.get('image', ''))}")
+        logger.info(f"Target language: {data.get('target_lang', 'Not specified')}")
+        logger.info(f"Return overlay: {data.get('return_overlay', False)}")
         
         target_lang = data.get("target_lang")
         return_overlay = bool(data.get("return_overlay", False))
@@ -1366,11 +1512,27 @@ def ocr():
             return jsonify({"text": "No text detected"})
 
         if best_candidate is None:
-            # Sort by confidence + text length
+            # Build word frequency map across all candidates
+            word_freq = {}
+            for r in all_results:
+                text = r.get("text", "") or ""
+                for w in text.split():
+                    key = w.lower()
+                    word_freq[key] = word_freq.get(key, 0) + 1
+
+            # Sort by confidence + text length + config priority + word frequency consistency
             def score(r):
                 base = r["confidence"] * 100
                 base += r["length"]
                 base += get_config_priority(r.get("config", "")) * CONFIG_PRIORITY_WEIGHT
+
+                text = r.get("text", "") or ""
+                words = [w.lower() for w in text.split() if w.strip()]
+                if words:
+                    # Average how often this candidate's words appear across all configs
+                    avg_freq = sum(word_freq.get(w, 1) for w in set(words)) / max(1, len(set(words)))
+                    base += avg_freq * WORD_FREQUENCY_WEIGHT
+
                 return base
 
             all_results.sort(key=score, reverse=True)
